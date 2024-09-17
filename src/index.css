@@ -1,13 +1,200 @@
+:root {
+  --my-white: #fff;
+  --my-pink: #f360a4;
+  --my-dark-blue: #2f2482;
+  --my-blue: #549fe0;
+  --my-light-purple: #aab1e8;
+  --my-clear-blue: #e3f7fe;
+  --my-green: #25c3c4;
+  --my-yellow: #fadf5e;
+  --my-purple: #9c99f4;
+  --my-background-purple: #c9caf6;
+  --my-clear-purple: #e8e8f6;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.App header {
+  padding: 8px;
+  align-items: center;
+  width: 100%;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 24px 0;
+}
+
+.App header h1 {
+  color: var(--my-white);
+  font-weight: bold;
+  font-size: 72px;
+  margin: 0;
+}
+
+.App header h2 {
+  color: var(--my-white);
+  font-style: italic;
+  font-size: 24;
+  font-weight: 200;
+}
+
+html {
+  background-color: var(--my-purple);
+}
+
+.content {
+  width: 75%;
+  margin: 24px auto;
+  background-color: var(--my-white);
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 32px;
+}
+
+.my-app-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  padding: 0;
+}
+
+.bar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.bar-links {
+  display: flex;
+  align-items: center;
+}
+
+.bar-links nav a {
+  margin-right: 10px;
+  color: var(--my-dark-blue);
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.bar-links nav a:hover {
+  color: var(--my-pink);
+}
+
+.my-app-bar h1 {
+  font-size: 24px;
+  color: var(--my-dark-blue);
+  font-weight: 400;
+}
+
+.bar-icon {
+  margin-right: 10px;
+  color: var(--my-pink);
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.home h1 {
+  color: var(--my-dark-blue);
+  display: block;
+}
+
+.home form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.homeImage {
+  margin-bottom: 40px;
+}
+
+.myParameters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  color: var(--my-dark-blue);
+}
+
+.home label {
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.home input,
+.home select {
+  width: 400px;
+  padding: 6px 10px;
+
+  margin-bottom: 24px;
+  border: 1px solid var(--my-light-purple);
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.home button {
+  background-color: var(--my-pink);
+  color: var(--my-white);
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 16px;
+  align-self: flex-end;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.incDecBtn {
+  height: 30px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  background-color: var(--my-white);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--my-light-purple);
+  transition: border 0.3s ease;
+}
+
+.incDecBtn:hover {
+  border: 1px solid var(--my-pink);
+}
+
+.incDecBtn button {
+  width: 50px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--my-light-purple);
+  background-color: var(--my-white);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.incDecBtn button:hover {
+  color: var(--my-pink);
+}
+
+.numberQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
