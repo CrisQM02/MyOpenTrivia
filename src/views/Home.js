@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import img1 from "./images/home-image.png";
 import IncrementDecrementBtn from "./IncrementDecrementBtn";
+import { useGetTriviaQuestionsQuery } from "../api/triviaApi";
 
 const categories = [
   { id: 9, name: "General Knowledge" },
@@ -21,6 +24,22 @@ const Home = () => {
   const [difficult, setDifficult] = useState("any");
   const [type, setType] = useState("any");
 
+  const navigate = useNavigate();
+
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useGetTriviaQuestionsQuery(
+    {
+      amount: number,
+      category: category && { category },
+      difficult: difficult !== "any" && { difficult },
+      type: type !== "any" && { type },
+    },
+    { skip: !number, refetchOnMountOrArgChange: true }
+  );
+
   const increaseNumber = () => {
     if (number < 15) {
       setNumber(number + 1);
@@ -33,8 +52,10 @@ const Home = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!questions || isError) return;
+    navigate("trivia", { state: { questions } });
   };
 
   return (
@@ -86,7 +107,7 @@ const Home = () => {
             className="homeImage"
             style={{ width: "480px", height: "auto" }}
           />
-          <button>Get Trivia</button>
+          {!isLoading && <button>Get Trivia</button>}
         </div>
       </form>
     </div>
