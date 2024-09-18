@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetTriviaQuestionsQuery } from "../api/triviaApi";
 
 import img1 from "./images/home-image.png";
 import IncrementDecrementBtn from "./IncrementDecrementBtn";
-import { useGetTriviaQuestionsQuery } from "../api/triviaApi";
 
 const categories = [
   { id: 9, name: "General Knowledge" },
@@ -20,9 +20,11 @@ const categories = [
 
 const Home = () => {
   const [number, setNumber] = useState(1);
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState(9);
   const [difficult, setDifficult] = useState("any");
   const [type, setType] = useState("any");
+
+  const [startFetch, setStartFetch] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,8 +39,14 @@ const Home = () => {
       difficult: difficult !== "any" && { difficult },
       type: type !== "any" && { type },
     },
-    { skip: !number, refetchOnMountOrArgChange: true }
+    { skip: !startFetch, refetchOnMountOrArgChange: true }
   );
+
+  useEffect(() => {
+    if (questions && !isError) {
+      navigate("/trivia", { state: { questions } });
+    }
+  }, [questions, isError, navigate]);
 
   const increaseNumber = () => {
     if (number < 15) {
@@ -54,8 +62,7 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!questions || isError) return;
-    navigate("trivia", { state: { questions } });
+    setStartFetch(true);
   };
 
   return (
@@ -108,6 +115,7 @@ const Home = () => {
             style={{ width: "480px", height: "auto" }}
           />
           {!isLoading && <button>Get Trivia</button>}
+          {isLoading && <button disabled>Loading...</button>}
         </div>
       </form>
     </div>
