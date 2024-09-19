@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetTriviaQuestionsQuery } from "../api/triviaApi";
+import { useLazyGetTriviaQuestionsQuery } from "../api/triviaApi";
 
 import img1 from "./images/home-image.png";
 import IncrementDecrementBtn from "./IncrementDecrementBtn";
 
 const categories = [
+  { id: 0, name: "Any" },
   { id: 9, name: "General Knowledge" },
   { id: 10, name: "Books" },
   { id: 11, name: "Films" },
@@ -20,27 +21,14 @@ const categories = [
 
 const Home = () => {
   const [number, setNumber] = useState(1);
-  const [category, setCategory] = useState(9);
+  const [category, setCategory] = useState(categories[0]);
   const [difficult, setDifficult] = useState("any");
   const [type, setType] = useState("any");
 
-  const [startFetch, setStartFetch] = useState(false);
-
   const navigate = useNavigate();
 
-  const {
-    data: questions,
-    isLoading,
-    isError,
-  } = useGetTriviaQuestionsQuery(
-    {
-      amount: number,
-      category: category && { category },
-      difficult: difficult !== "any" && { difficult },
-      type: type !== "any" && { type },
-    },
-    { skip: !startFetch, refetchOnMountOrArgChange: true }
-  );
+  const [getData, { data: questions, isLoading, isError }] =
+    useLazyGetTriviaQuestionsQuery({ refetchOnMountOrArgChange: true });
 
   useEffect(() => {
     if (questions && !isError) {
@@ -62,7 +50,12 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStartFetch(true);
+    getData({
+      amount: number,
+      category: category.id !== 0 && { category },
+      difficult: difficult !== "any" && { difficult },
+      type: type !== "any" && { type },
+    });
   };
 
   return (
@@ -82,7 +75,7 @@ const Home = () => {
           <label>Category</label>
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => setCategory(e.target.value.id)}
           >
             {categories.map((category) => (
               <option value={category.id} key={category.id}>
@@ -115,7 +108,7 @@ const Home = () => {
             style={{ width: "480px", height: "auto" }}
           />
           {!isLoading && <button>Get Trivia</button>}
-          {isLoading && <button disabled>Loading...</button>}
+          {isLoading && <p>Loading...</p>}
         </div>
       </form>
     </div>

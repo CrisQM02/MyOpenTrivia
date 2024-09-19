@@ -19,4 +19,4 @@ export const triviaApi = createApi({
   }),
 });
 
-export const { useGetTriviaQuestionsQuery } = triviaApi;
+export const { useLazyGetTriviaQuestionsQuery } = triviaApi;
